@@ -107,14 +107,14 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="page-container">
       <header className="mb-6">
-        <h1 className="text-2xl font-bold">{t('settings.title')}</h1>
+        <h1 className="text-2xl font-bold">Paramètres</h1>
       </header>
       
       <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">{t('settings.preferences')}</h2>
+        <h2 className="text-lg font-semibold mb-4">Préférences</h2>
         <div className="card space-y-6">
           <div>
-            <label htmlFor="currency" className="input-label">{t('settings.currency')}</label>
+            <label htmlFor="currency" className="input-label">Devise</label>
             <div className="flex items-center">
               <DollarSign size={20} className="text-gray-500 mr-2" />
               <select
@@ -123,19 +123,19 @@ const SettingsPage: React.FC = () => {
                 onChange={handleCurrencyChange}
                 className="flex-1"
               >
-                <option value="USD">{t('currency.usd')}</option>
-                <option value="EUR">{t('currency.eur')}</option>
-                <option value="GBP">{t('currency.gbp')}</option>
-                <option value="JPY">{t('currency.jpy')}</option>
-                <option value="CAD">{t('currency.cad')}</option>
-                <option value="AUD">{t('currency.aud')}</option>
-                <option value="CHF">{t('currency.chf')}</option>
+                <option value="USD">Dollar américain (USD)</option>
+                <option value="EUR">Euro (EUR)</option>
+                <option value="GBP">Livre sterling (GBP)</option>
+                <option value="JPY">Yen (JPY)</option>
+                <option value="CAD">Dollar canadien (CAD)</option>
+                <option value="AUD">Dollar australien (AUD)</option>
+                <option value="CHF">Franc suisse (CHF)</option>
               </select>
             </div>
           </div>
           
           <div>
-            <label htmlFor="firstDay" className="input-label">{t('settings.firstDay')}</label>
+            <label htmlFor="firstDay" className="input-label">Premier jour du mois</label>
             <div className="flex items-center">
               <Calendar size={20} className="text-gray-500 mr-2" />
               <select
@@ -144,15 +144,15 @@ const SettingsPage: React.FC = () => {
                 onChange={handleFirstDayChange}
                 className="flex-1"
               >
-                <option value="1">{t('firstDay.1')}</option>
-                <option value="15">{t('firstDay.15')}</option>
-                <option value="25">{t('firstDay.25')}</option>
+                <option value="1">1</option>
+                <option value="15">15</option>
+                <option value="25">25</option>
               </select>
             </div>
           </div>
           
           <div>
-            <label htmlFor="theme" className="input-label">{t('settings.theme')}</label>
+            <label htmlFor="theme" className="input-label">Thème</label>
             <div className="flex items-center">
               {theme === 'dark' ? (
                 <Moon size={20} className="text-gray-500 mr-2" />
@@ -165,9 +165,9 @@ const SettingsPage: React.FC = () => {
                 onChange={handleThemeChange}
                 className="flex-1"
               >
-                <option value="light">{t('theme.light')}</option>
-                <option value="dark">{t('theme.dark')}</option>
-                <option value="system">{t('theme.system')}</option>
+                <option value="light">Clair</option>
+                <option value="dark">Sombre</option>
+                <option value="system">Système</option>
               </select>
             </div>
           </div>
@@ -175,7 +175,7 @@ const SettingsPage: React.FC = () => {
       </section>
       
       <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">{t('settings.dataManagement')}</h2>
+        <h2 className="text-lg font-semibold mb-4">Gestion des données</h2>
         <div className="space-y-2">
           <Link
             to="/settings/categories"
@@ -187,9 +187,9 @@ const SettingsPage: React.FC = () => {
                   <Tag size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
                 <div>
-                  <h3 className="font-medium">{t('settings.categories')}</h3>
+                  <h3 className="font-medium">Catégories</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {t('settings.categoriesDescription')}
+                    Gérez vos catégories de dépenses et de revenus
                   </p>
                 </div>
               </div>
@@ -207,9 +207,9 @@ const SettingsPage: React.FC = () => {
                   <FileText size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
                 <div>
-                  <h3 className="font-medium">{t('settings.importExport')}</h3>
+                  <h3 className="font-medium">Import/Export</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {t('settings.importExportDescription')}
+                    Importez ou exportez vos données
                   </p>
                 </div>
               </div>
@@ -218,28 +218,28 @@ const SettingsPage: React.FC = () => {
           </Link>
           
           <div className="card">
-            <h3 className="font-medium mb-2">{t('settings.quickExport')}</h3>
+            <h3 className="font-medium mb-2">Export rapide</h3>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => exportData()}
                 className="btn-outline flex items-center justify-center"
               >
                 <Download size={18} className="mr-2" />
-                {t('settings.fullBackup')}
+                Sauvegarde complète
               </button>
               <button
                 onClick={() => exportCSV('transactions')}
                 className="btn-outline flex items-center justify-center"
               >
                 <Download size={18} className="mr-2" />
-                {t('settings.transactionsCSV')}
+                Transactions (CSV)
               </button>
               <button
                 onClick={() => handleExportToExcel()}
                 className="btn-outline flex items-center justify-center"
               >
                 <Download size={18} className="mr-2" />
-                {t('settings.exportToExcel')}
+                Exporter vers Excel
               </button>
             </div>
           </div>
@@ -253,9 +253,9 @@ const SettingsPage: React.FC = () => {
                 <Trash size={20} className="text-red-600 dark:text-red-400" />
               </div>
               <div className="text-left">
-                <h3 className="font-medium">{t('settings.resetAllData')}</h3>
+                <h3 className="font-medium">Réinitialiser toutes les données</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {t('settings.resetAllDataDescription')}
+                  Réinitialisez toutes vos données et restaurez les catégories par défaut
                 </p>
               </div>
             </div>
@@ -266,22 +266,22 @@ const SettingsPage: React.FC = () => {
       {showResetConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-sm w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">{t('settings.resetConfirmTitle')}</h3>
+            <h3 className="text-xl font-bold mb-4">Confirmer la réinitialisation</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              {t('settings.resetConfirmDescription')}
+              Êtes-vous sûr de vouloir réinitialiser toutes les données ? Cette action est irréversible.
             </p>
             <div className="flex justify-end space-x-3">
               <button
                 className="btn-outline"
                 onClick={() => setShowResetConfirm(false)}
               >
-                {t('settings.cancel')}
+                Annuler
               </button>
               <button
                 className="btn bg-red-500 hover:bg-red-600 text-white"
                 onClick={handleReset}
               >
-                {t('settings.reset')}
+                Réinitialiser
               </button>
             </div>
           </div>

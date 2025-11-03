@@ -1,19 +1,21 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Home, Wallet, PiggyBank, BarChart2, Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const NavBar: React.FC = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const path = location.pathname.split('/')[1];
   
   const isActive = (route: string) => path === route;
   
   const navItems = [
-    { name: 'Home', path: '', icon: Home },
-    { name: 'Expenses', path: 'expenses', icon: Wallet },
-    { name: 'Income', path: 'income', icon: PiggyBank },
-    { name: 'Budgets', path: 'budgets', icon: BarChart2 },
-    { name: 'Settings', path: 'settings', icon: Settings },
+    { name: t('navbar.home', 'Accueil'), path: '', icon: Home },
+    { name: t('navbar.expenses', 'Dépenses'), path: 'expenses', icon: Wallet },
+    { name: t('navbar.income', 'Revenus'), path: 'income', icon: PiggyBank },
+    { name: t('navbar.budgets', 'Budgets'), path: 'budgets', icon: BarChart2 },
+    { name: t('navbar.settings', 'Paramètres'), path: 'settings', icon: Settings },
   ];
   
   return (

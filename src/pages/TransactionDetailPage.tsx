@@ -24,12 +24,12 @@ const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ type }) =
       <div className="page-container">
         <div className="card flex flex-col items-center justify-center py-8">
           <AlertTriangle size={48} className="text-warning-500 mb-4" />
-          <h2 className="text-xl font-bold mb-2">Transaction Not Found</h2>
+          <h2 className="text-xl font-bold mb-2">Transaction introuvable</h2>
           <p className="text-gray-500 dark:text-gray-400 mb-4">
-            The {type} you are looking for does not exist.
+            La {type === 'expense' ? 'dépense' : 'revenu'} que vous recherchez n'existe pas.
           </p>
           <Link to={`/${type}s`} className="btn-primary">
-            Back to {type === 'expense' ? 'Expenses' : 'Income'}
+            Retour aux {type === 'expense' ? 'dépenses' : 'revenus'}
           </Link>
         </div>
       </div>
@@ -52,7 +52,7 @@ const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ type }) =
             <ArrowLeft size={24} />
           </button>
           <h1 className="text-2xl font-bold">
-            {type === 'expense' ? 'Expense Details' : 'Income Details'}
+            {type === 'expense' ? 'Détails de la dépense' : 'Détails du revenu'}
           </h1>
         </div>
         <div className="flex">
@@ -61,13 +61,13 @@ const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ type }) =
             className="btn-outline flex items-center mr-2"
           >
             <Edit size={18} className="mr-1" />
-            Edit
+            Modifier
           </Link>
           <button
             className="btn-outline text-red-500 dark:text-red-400 border-red-500 dark:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center"
             onClick={() => setShowDeleteConfirm(true)}>
             <Trash size={18} className="mr-1" />
-            Delete
+            Supprimer
           </button>
         </div>
       </header>
@@ -111,8 +111,8 @@ const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ type }) =
 
       <ConfirmDialog
         open={showDeleteConfirm}
-        title="Delete Transaction?"
-        message={`Are you sure you want to delete this ${type}? This action cannot be undone.`}
+        title="Supprimer la transaction ?"
+        message={`Êtes-vous sûr de vouloir supprimer cette ${type === 'expense' ? 'dépense' : 'revenu'} ? Cette action est irréversible.`}
         onCancel={() => setShowDeleteConfirm(false)}
         onConfirm={handleDelete}
       />

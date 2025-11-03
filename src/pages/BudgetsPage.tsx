@@ -175,10 +175,10 @@ const BudgetsPage: React.FC = () => {
           <button
             onClick={() => setShowResetConfirm(true)}
             className="btn-outline flex items-center text-sm"
-            title="Reset to planned budgets"
+            title={t('budgets.resetToPlan', 'Reset to planned budgets')}
           >
             <Copy size={16} className="mr-2" />
-            Reset to Plan
+            Réinitialiser selon le modèle
           </button>
           <select
             value={selectedMonth}
@@ -243,15 +243,15 @@ const BudgetsPage: React.FC = () => {
                     <div className="flex items-center gap-2">
                       {isFinished ? (
                         <div className="flex items-center text-gray-400">
-                          <span className="text-sm font-medium">Finished</span>
+                          <span className="text-sm font-medium">{t('budgets.finished', 'Finished')}</span>
                         </div>
                       ) : isOverBudget && (
                         <div className="flex items-center text-warning-500">
                           <AlertTriangle size={16} className="mr-1" />
-                          <span className="text-sm font-medium">Over budget</span>
+                          <span className="text-sm font-medium">{t('budgets.overBudget', 'Over budget')}</span>
                           <button
                             className="ml-2 btn-outline text-xs px-2 py-1 flex items-center"
-                            title="Équilibrer"
+                            title={t('budgets.balance', 'Équilibrer')}
                             onClick={e => { e.preventDefault(); handleBalanceClick(budget); }}
                           >
                             <Scale size={16} />
@@ -262,7 +262,7 @@ const BudgetsPage: React.FC = () => {
                       {!isFinished && !isOverBudget && (
                         <button
                           className="ml-2 btn-outline text-xs px-2 py-1 flex items-center"
-                          title="Clôturer le budget"
+                          title={t('budgets.close', 'Clôturer le budget')}
                           onClick={e => { e.preventDefault(); handleCloseClick(budget); }}
                         >
                           <CheckCircle2 size={16} />
@@ -272,7 +272,7 @@ const BudgetsPage: React.FC = () => {
                   </div>
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-gray-500 dark:text-gray-400">
-                      Spent: {formatCurrency(budget.spent, settings.currency)}
+                      Dépensé : {formatCurrency(budget.spent, settings.currency)}
                     </span>
                     {!isFinished && (
                       <span className={`font-medium ${
@@ -280,7 +280,7 @@ const BudgetsPage: React.FC = () => {
                           ? 'text-warning-500'
                           : 'text-green-500'
                       }`}>
-                        {isOverBudget ? 'Over by ' : 'Left: '}
+                        {isOverBudget ? 'Dépassé de ' : 'Restant : '}
                         {formatCurrency(
                           isOverBudget ? -budget.remaining : budget.remaining, 
                           settings.currency
@@ -302,7 +302,7 @@ const BudgetsPage: React.FC = () => {
                   </div>
                   <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
                     <span>
-                      {formatCurrency(budget.spent, settings.currency)} of {formatCurrency(budget.amount, settings.currency)}
+                      {formatCurrency(budget.spent, settings.currency)} sur {formatCurrency(budget.amount, settings.currency)}
                     </span>
                     <span>{Math.round(budget.percentage)}%</span>
                   </div>
@@ -316,19 +316,19 @@ const BudgetsPage: React.FC = () => {
               <div className="text-gray-400 mb-2">
                 <Filter size={48} />
               </div>
-              <h3 className="text-lg font-medium mb-1">No budgets found</h3>
+              <h3 className="text-lg font-medium mb-1">Aucun budget trouvé</h3>
               <p className="text-gray-500 dark:text-gray-400 mb-4">
-                Start by creating a budget for your expenses
+                Commencez par créer un budget pour vos dépenses
               </p>
             </div>
             <div className="space-y-2">
               <Link to="/budgets/add" className="btn-primary flex items-center">
                 <Plus size={18} className="mr-2" />
-                Create Budget
+                Créer un budget
               </Link>
               <Link to="/budgets/planned" className="btn-outline flex items-center">
                 <Copy size={18} className="mr-2" />
-                Manage Planned Budgets
+                Gérer les budgets planifiés
               </Link>
             </div>
           </div>
@@ -355,23 +355,22 @@ const BudgetsPage: React.FC = () => {
       {showResetConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-sm w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Reset Monthly Budgets?</h3>
+            <h3 className="text-xl font-bold mb-4">Réinitialiser les budgets mensuels ?</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              This will reset your current month's budgets to match your planned budget template. 
-              This action cannot be undone.
+              Cela va réinitialiser les budgets du mois en cours selon le modèle planifié. Cette action est irréversible.
             </p>
             <div className="flex justify-end space-x-3">
               <button
                 className="btn-outline"
                 onClick={() => setShowResetConfirm(false)}
               >
-                Cancel
+                Annuler
               </button>
               <button
                 className="btn-primary"
                 onClick={handleResetBudgets}
               >
-                Reset to Plan
+                Réinitialiser selon le modèle
               </button>
             </div>
           </div>

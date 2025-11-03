@@ -111,22 +111,22 @@ const PlannedBudgetPage: React.FC = () => {
           >
             <ArrowLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold">Planned Budgets</h1>
+          <h1 className="text-2xl font-bold">Budgets planifiés</h1>
         </div>
         <button
           onClick={handleAddBudget}
           className="btn-primary flex items-center"
         >
           <Plus size={20} className="mr-2" />
-          Add Budget
+          Ajouter un budget
         </button>
       </header>
 
       <div className="card mb-6">
         <div className="text-sm text-gray-500 dark:text-gray-400 mb-6">
           <p>
-            Planned budgets serve as a template for your monthly budgets. 
-            They will be automatically applied at the start of each month.
+            Les budgets planifiés servent de modèle pour vos budgets mensuels. 
+            Ils seront automatiquement appliqués au début de chaque mois.
           </p>
         </div>
 
@@ -173,7 +173,7 @@ const PlannedBudgetPage: React.FC = () => {
                     <div>
                       <div className="font-medium">{budget.name || budgetCategories.join(', ')}</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Monthly budget: {formatCurrency(budget.amount, settings.currency)}
+                        Budget mensuel : {formatCurrency(budget.amount, settings.currency)}
                       </div>
                     </div>
                   </div>
@@ -198,16 +198,16 @@ const PlannedBudgetPage: React.FC = () => {
         ) : (
           <div className="text-center py-8">
             <AlertTriangle size={48} className="mx-auto text-warning-500 mb-4" />
-            <h3 className="text-lg font-medium mb-2">No planned budgets</h3>
+            <h3 className="text-lg font-medium mb-2">Aucun budget planifié</h3>
             <p className="text-gray-500 dark:text-gray-400 mb-4">
-              Start by creating a planned budget that will be used as a template each month.
+              Commencez par créer un budget planifié qui servira de modèle chaque mois.
             </p>
             <button
               onClick={handleAddBudget}
               className="btn-primary flex items-center mx-auto"
             >
               <Plus size={18} className="mr-2" />
-              Add Planned Budget
+              Ajouter un budget planifié
             </button>
           </div>
         )}
@@ -217,10 +217,10 @@ const PlannedBudgetPage: React.FC = () => {
       {showAddModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-md w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Add Planned Budget</h3>
+            <h3 className="text-xl font-bold mb-4">Ajouter un budget planifié</h3>
             <form onSubmit={handleSubmitAdd}>
               <div className="input-group">
-                <label htmlFor="budget-name" className="input-label">Budget Name</label>
+                <label htmlFor="budget-name" className="input-label">Nom du budget</label>
                 <input
                   id="budget-name"
                   type="text"
@@ -231,7 +231,7 @@ const PlannedBudgetPage: React.FC = () => {
                 />
               </div>
               <div className="input-group">
-                <label className="input-label">Categories</label>
+                <label className="input-label">Catégories</label>
                 <div className="flex flex-wrap gap-2">
                   {expenseCategories.map((category) => (
                     <label key={category.id} className="flex items-center gap-2">
@@ -248,7 +248,7 @@ const PlannedBudgetPage: React.FC = () => {
 
               <div className="input-group">
                 <label htmlFor="amount" className="input-label">
-                  Monthly Amount ({settings.currency})
+                  Montant mensuel ({settings.currency})
                 </label>
                 <input
                   type="number"
@@ -263,7 +263,7 @@ const PlannedBudgetPage: React.FC = () => {
               </div>
 
               <div className="input-group">
-                <label htmlFor="notes" className="input-label">Notes (Optional)</label>
+                <label htmlFor="notes" className="input-label">Notes (optionnel)</label>
                 <textarea
                   id="notes"
                   value={formData.notes}
@@ -279,10 +279,10 @@ const PlannedBudgetPage: React.FC = () => {
                   className="btn-outline"
                   onClick={() => setShowAddModal(false)}
                 >
-                  Cancel
+                  Annuler
                 </button>
                 <button type="submit" className="btn-primary">
-                  Add Budget
+                  Ajouter
                 </button>
               </div>
             </form>
@@ -294,10 +294,10 @@ const PlannedBudgetPage: React.FC = () => {
       {showEditModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-md w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Edit Planned Budget</h3>
+            <h3 className="text-xl font-bold mb-4">Modifier le budget planifié</h3>
             <form onSubmit={handleSubmitEdit}>
               <div className="input-group">
-                <label htmlFor="edit-budget-name" className="input-label">Budget Name</label>
+                <label htmlFor="edit-budget-name" className="input-label">Nom du budget</label>
                 <input
                   id="edit-budget-name"
                   type="text"
@@ -308,7 +308,7 @@ const PlannedBudgetPage: React.FC = () => {
                 />
               </div>
               <div className="input-group">
-                <label className="input-label">Categories</label>
+                <label className="input-label">Catégories</label>
                 <div className="flex flex-wrap gap-2">
                   {expenseCategories.map((category) => (
                     <label key={category.id} className="flex items-center gap-2">
@@ -325,7 +325,7 @@ const PlannedBudgetPage: React.FC = () => {
 
               <div className="input-group">
                 <label htmlFor="edit-amount" className="input-label">
-                  Monthly Amount ({settings.currency})
+                  Montant mensuel ({settings.currency})
                 </label>
                 <input
                   type="number"
@@ -340,7 +340,7 @@ const PlannedBudgetPage: React.FC = () => {
               </div>
 
               <div className="input-group">
-                <label htmlFor="edit-notes" className="input-label">Notes (Optional)</label>
+                <label htmlFor="edit-notes" className="input-label">Notes (optionnel)</label>
                 <textarea
                   id="edit-notes"
                   value={formData.notes}
@@ -356,10 +356,10 @@ const PlannedBudgetPage: React.FC = () => {
                   className="btn-outline"
                   onClick={() => setShowEditModal(false)}
                 >
-                  Cancel
+                  Annuler
                 </button>
                 <button type="submit" className="btn-primary">
-                  Save Changes
+                  Enregistrer
                 </button>
               </div>
             </form>
@@ -371,22 +371,22 @@ const PlannedBudgetPage: React.FC = () => {
       {showDeleteConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-sm w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Delete Planned Budget?</h3>
+            <h3 className="text-xl font-bold mb-4">Supprimer le budget planifié ?</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Are you sure you want to delete this planned budget? This will not affect existing monthly budgets.
+              Êtes-vous sûr de vouloir supprimer ce budget planifié ? Cela n'affectera pas les budgets mensuels existants.
             </p>
             <div className="flex justify-end space-x-3">
               <button
                 className="btn-outline"
                 onClick={() => setShowDeleteConfirm(false)}
               >
-                Cancel
+                Annuler
               </button>
               <button
                 className="btn bg-red-500 hover:bg-red-600 text-white"
                 onClick={handleConfirmDelete}
               >
-                Delete
+                Supprimer
               </button>
             </div>
           </div>

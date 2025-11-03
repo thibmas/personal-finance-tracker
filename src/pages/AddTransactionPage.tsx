@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { useData } from '../context/DataContext';
+import { useTranslation } from 'react-i18next';
 
 interface AddTransactionPageProps {
   type: 'expense' | 'income';
@@ -10,6 +11,7 @@ interface AddTransactionPageProps {
 const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
   const navigate = useNavigate();
   const { addTransaction, categories, settings } = useData();
+  const { t } = useTranslation();
   
   const filteredCategories = categories.filter(
     (category) => category.type === type || category.type === 'both'
@@ -54,7 +56,7 @@ const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
           <ArrowLeft size={24} />
         </button>
         <h1 className="text-2xl font-bold">
-          {type === 'expense' ? 'Add Expense' : 'Add Income'}
+          {type === 'expense' ? 'Ajouter une dépense' : 'Ajouter un revenu'}
         </h1>
       </header>
       
@@ -62,7 +64,7 @@ const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
         <div className="card mb-6">
           <div className="input-group">
             <label htmlFor="amount" className="input-label">
-              Amount ({settings.currency})
+              Montant ({settings.currency})
             </label>
             <input
               type="number"
@@ -95,7 +97,7 @@ const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
           
           <div className="input-group">
             <label htmlFor="category" className="input-label">
-              Category
+              Catégorie
             </label>
             <select
               id="category"
@@ -106,7 +108,7 @@ const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
               required
             >
               <option value="" disabled>
-                Select a category
+                Sélectionnez une catégorie
               </option>
               {filteredCategories.map((category) => (
                 <option key={category.id} value={category.name}>
@@ -124,7 +126,7 @@ const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
               type="text"
               id="description"
               name="description"
-              placeholder={type === 'expense' ? 'e.g., Grocery shopping' : 'e.g., Monthly salary'}
+              placeholder={type === 'expense' ? t('transaction.expensePlaceholder', 'e.g., Grocery shopping') : t('transaction.incomePlaceholder', 'e.g., Monthly salary')}
               value={formData.description}
               onChange={handleChange}
               className="w-full"
@@ -134,12 +136,12 @@ const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
           
           <div className="input-group mb-0">
             <label htmlFor="notes" className="input-label">
-              Notes (Optional)
+              Notes (optionnel)
             </label>
             <textarea
               id="notes"
               name="notes"
-              placeholder="Add any additional details"
+              placeholder={t('transaction.notesPlaceholder', 'Add any additional details')}
               value={formData.notes}
               onChange={handleChange}
               className="w-full"
@@ -155,7 +157,7 @@ const AddTransactionPage: React.FC<AddTransactionPageProps> = ({ type }) => {
           } flex items-center justify-center text-lg`}
         >
           <Save size={20} className="mr-2" />
-          Save {type === 'expense' ? 'Expense' : 'Income'}
+          {type === 'expense' ? 'Enregistrer la dépense' : 'Enregistrer le revenu'}
         </button>
       </form>
     </div>

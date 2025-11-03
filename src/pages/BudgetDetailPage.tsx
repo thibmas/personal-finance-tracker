@@ -10,12 +10,14 @@ import {
   getBudgetPercentage
 } from '../utils/formatters';
 import TransactionList from '../components/transactions/TransactionList';
+import { useTranslation } from 'react-i18next';
 
 const BudgetDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { budgets, transactions, categories, settings, deleteBudget } = useData();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const { t } = useTranslation();
   
   const budget = budgets.find((b) => b.id === id);
   
@@ -24,12 +26,12 @@ const BudgetDetailPage: React.FC = () => {
       <div className="page-container">
         <div className="card flex flex-col items-center justify-center py-8">
           <AlertTriangle size={48} className="text-warning-500 mb-4" />
-          <h2 className="text-xl font-bold mb-2">Budget Not Found</h2>
+          <h2 className="text-xl font-bold mb-2">{t('budget.notFound', 'Budget Not Found')}</h2>
           <p className="text-gray-500 dark:text-gray-400 mb-4">
-            The budget you are looking for does not exist.
+            {t('budget.notFoundDesc', 'The budget you are looking for does not exist.')}
           </p>
           <Link to="/budgets" className="btn-primary">
-            Back to Budgets
+            {t('budget.backToBudgets', 'Back to Budgets')}
           </Link>
         </div>
       </div>
@@ -68,7 +70,7 @@ const BudgetDetailPage: React.FC = () => {
           >
             <ArrowLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold">Budget Details</h1>
+          <h1 className="text-2xl font-bold">Détails du budget</h1>
         </div>
         <div className="flex">
           <Link
@@ -76,14 +78,14 @@ const BudgetDetailPage: React.FC = () => {
             className="btn-outline flex items-center mr-2"
           >
             <Edit size={18} className="mr-1" />
-            Edit
+            {t('edit', 'Edit')}
           </Link>
           <button
             className="btn-outline text-red-500 dark:text-red-400 border-red-500 dark:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center"
             onClick={() => setShowDeleteConfirm(true)}
           >
             <Trash size={18} className="mr-1" />
-            Delete
+            {t('delete', 'Delete')}
           </button>
         </div>
       </header>
@@ -120,7 +122,7 @@ const BudgetDetailPage: React.FC = () => {
                 </div>
               )}
               <span className="text-gray-600 dark:text-gray-300">
-                {budget.period === 'monthly' ? 'Monthly' : 'Yearly'} budget
+                {budget.period === 'monthly' ? 'Mensuel' : 'Annuel'} budget
               </span>
             </div>
           </div>
@@ -132,14 +134,10 @@ const BudgetDetailPage: React.FC = () => {
         <div className="mb-6">
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-500 dark:text-gray-400">
-              Spent: {formatCurrency(spent, settings.currency)}
+              Dépensé : {formatCurrency(spent, settings.currency)}
             </span>
             <span className={`font-medium ${isOverBudget ? 'text-warning-500' : 'text-green-500'}`}>
-              {isOverBudget ? 'Over by ' : 'Left: '}
-              {formatCurrency(
-                isOverBudget ? -remaining : remaining, 
-                settings.currency
-              )}
+              {isOverBudget ? 'Dépassé de' : 'Restant'} : {formatCurrency(isOverBudget ? -remaining : remaining, settings.currency)}
             </span>
           </div>
           
@@ -154,7 +152,7 @@ const BudgetDetailPage: React.FC = () => {
           
           <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>
-              {formatCurrency(spent, settings.currency)} of {formatCurrency(budget.amount, settings.currency)}
+              {formatCurrency(spent, settings.currency)} sur {formatCurrency(budget.amount, settings.currency)}
             </span>
             <span>{Math.round(percentage)}%</span>
           </div>
@@ -162,12 +160,12 @@ const BudgetDetailPage: React.FC = () => {
         
         <div className="border-t border-gray-100 dark:border-gray-800 pt-4 grid grid-cols-2 gap-4">
           <div>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Start Date</h3>
+            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Date de début</h3>
             <p>{formatDate(budget.startDate)}</p>
           </div>
           
           <div>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Period</h3>
+            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Période</h3>
             <p className="capitalize">{budget.period}</p>
           </div>
           
@@ -181,12 +179,12 @@ const BudgetDetailPage: React.FC = () => {
       </div>
       
       <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">Related Transactions</h2>
+        <h2 className="text-lg font-semibold mb-4">Transactions liées</h2>
         {relatedTransactions.length > 0 ? (
           <TransactionList transactions={relatedTransactions} />
         ) : (
           <div className="card p-6 text-center">
-            <p className="text-gray-500 dark:text-gray-400">No related transactions found</p>
+            <p className="text-gray-500 dark:text-gray-400">Aucune transaction liée trouvée</p>
           </div>
         )}
       </section>
@@ -194,22 +192,22 @@ const BudgetDetailPage: React.FC = () => {
       {showDeleteConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-sm w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Delete Budget?</h3>
+            <h3 className="text-xl font-bold mb-4">Supprimer le budget ?</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Are you sure you want to delete this budget? This action cannot be undone.
+              Êtes-vous sûr de vouloir supprimer ce budget ? Cette action est irréversible.
             </p>
             <div className="flex justify-end space-x-3">
               <button
                 className="btn-outline"
                 onClick={() => setShowDeleteConfirm(false)}
               >
-                Cancel
+                Annuler
               </button>
               <button
                 className="btn bg-red-500 hover:bg-red-600 text-white"
                 onClick={handleDelete}
               >
-                Delete
+                Supprimer
               </button>
             </div>
           </div>

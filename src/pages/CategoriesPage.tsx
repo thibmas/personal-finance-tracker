@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Edit, Trash } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import { Category } from '../types';
+import { useTranslation } from 'react-i18next';
 
 const CategoriesPage: React.FC = () => {
   const navigate = useNavigate();
   const { categories, addCategory, updateCategory, deleteCategory } = useData();
+  const { t } = useTranslation();
   
   const [activeTab, setActiveTab] = useState<'expense' | 'income'>('expense');
   const [showAddModal, setShowAddModal] = useState(false);
@@ -111,7 +113,7 @@ const CategoriesPage: React.FC = () => {
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-2xl font-bold">Categories</h1>
+        <h1 className="text-2xl font-bold">Catégories</h1>
       </header>
       
       <div className="flex mb-6 overflow-x-auto">
@@ -123,7 +125,7 @@ const CategoriesPage: React.FC = () => {
           }`}
           onClick={() => setActiveTab('expense')}
         >
-          Expenses
+          Dépenses
         </button>
         <button
           className={`px-4 py-2 mr-2 rounded-lg ${
@@ -133,21 +135,21 @@ const CategoriesPage: React.FC = () => {
           }`}
           onClick={() => setActiveTab('income')}
         >
-          Income
+          Revenus
         </button>
       </div>
       
       <div className="card mb-4">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">
-            {activeTab === 'expense' ? 'Expense' : 'Income'} Categories
+            {activeTab === 'expense' ? 'Catégories de dépenses' : 'Catégories de revenus'}
           </h2>
           <button
             onClick={handleAddCategory}
             className="btn-primary flex items-center text-sm py-1"
           >
             <Plus size={16} className="mr-1" />
-            Add Category
+            Ajouter une catégorie
           </button>
         </div>
         
@@ -173,14 +175,14 @@ const CategoriesPage: React.FC = () => {
                   <button
                     onClick={() => handleEditCategory(category)}
                     className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                    aria-label={`Edit ${category.name} category`}
+                    aria-label={t('categories.editCategory', `Edit ${category.name} category`)}
                   >
                     <Edit size={18} />
                   </button>
                   <button
                     onClick={() => handleDeleteCategory(category)}
                     className="p-2 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400"
-                    aria-label={`Delete ${category.name} category`}
+                    aria-label={t('categories.deleteCategory', `Delete ${category.name} category`)}
                   >
                     <Trash size={18} />
                   </button>
@@ -189,7 +191,7 @@ const CategoriesPage: React.FC = () => {
             ))
           ) : (
             <p className="py-6 text-center text-gray-500 dark:text-gray-400">
-              No {activeTab} categories found
+              {t('categories.noCategories', `No ${activeTab} categories found`)}
             </p>
           )}
         </div>
@@ -199,11 +201,11 @@ const CategoriesPage: React.FC = () => {
       {showAddModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-md w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Add Category</h3>
+            <h3 className="text-xl font-bold mb-4">Ajouter une catégorie</h3>
             <form onSubmit={handleSubmitAdd}>
               <div className="input-group">
                 <label htmlFor="name" className="input-label">
-                  Category Name
+                  Nom de la catégorie
                 </label>
                 <input
                   type="text"
@@ -217,7 +219,7 @@ const CategoriesPage: React.FC = () => {
               
               <div className="input-group">
                 <label htmlFor="type" className="input-label">
-                  Category Type
+                  Type de catégorie
                 </label>
                 <select
                   id="type"
@@ -225,15 +227,15 @@ const CategoriesPage: React.FC = () => {
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   className="w-full"
                 >
-                  <option value="expense">Expense</option>
-                  <option value="income">Income</option>
-                  <option value="both">Both</option>
+                  <option value="expense">Dépense</option>
+                  <option value="income">Revenu</option>
+                  <option value="both">Les deux</option>
                 </select>
               </div>
               
               <div className="input-group">
                 <label htmlFor="color" className="input-label">
-                  Color
+                  Couleur
                 </label>
                 <div className="flex items-center">
                   <input
@@ -253,10 +255,10 @@ const CategoriesPage: React.FC = () => {
                   className="btn-outline"
                   onClick={() => setShowAddModal(false)}
                 >
-                  Cancel
+                  Annuler
                 </button>
                 <button type="submit" className="btn-primary">
-                  Add Category
+                  Ajouter
                 </button>
               </div>
             </form>
@@ -268,11 +270,11 @@ const CategoriesPage: React.FC = () => {
       {showEditModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-md w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Edit Category</h3>
+            <h3 className="text-xl font-bold mb-4">Modifier la catégorie</h3>
             <form onSubmit={handleSubmitEdit}>
               <div className="input-group">
                 <label htmlFor="edit-name" className="input-label">
-                  Category Name
+                  Nom de la catégorie
                 </label>
                 <input
                   type="text"
@@ -286,7 +288,7 @@ const CategoriesPage: React.FC = () => {
               
               <div className="input-group">
                 <label htmlFor="edit-type" className="input-label">
-                  Category Type
+                  Type de catégorie
                 </label>
                 <select
                   id="edit-type"
@@ -294,15 +296,15 @@ const CategoriesPage: React.FC = () => {
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   className="w-full"
                 >
-                  <option value="expense">Expense</option>
-                  <option value="income">Income</option>
-                  <option value="both">Both</option>
+                  <option value="expense">Dépense</option>
+                  <option value="income">Revenu</option>
+                  <option value="both">Les deux</option>
                 </select>
               </div>
               
               <div className="input-group">
                 <label htmlFor="edit-color" className="input-label">
-                  Color
+                  Couleur
                 </label>
                 <div className="flex items-center">
                   <input
@@ -322,10 +324,10 @@ const CategoriesPage: React.FC = () => {
                   className="btn-outline"
                   onClick={() => setShowEditModal(false)}
                 >
-                  Cancel
+                  Annuler
                 </button>
                 <button type="submit" className="btn-primary">
-                  Save Changes
+                  Enregistrer
                 </button>
               </div>
             </form>
@@ -337,22 +339,22 @@ const CategoriesPage: React.FC = () => {
       {showDeleteConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
           <div className="card max-w-sm w-full animate-fade-in">
-            <h3 className="text-xl font-bold mb-4">Delete Category?</h3>
+            <h3 className="text-xl font-bold mb-4">Supprimer la catégorie ?</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Are you sure you want to delete "{selectedCategory?.name}"? This action cannot be undone.
+              Êtes-vous sûr de vouloir supprimer "{selectedCategory?.name}" ? Cette action est irréversible.
             </p>
             <div className="flex justify-end space-x-3">
               <button
                 className="btn-outline"
                 onClick={() => setShowDeleteConfirm(false)}
               >
-                Cancel
+                Annuler
               </button>
               <button
                 className="btn bg-red-500 hover:bg-red-600 text-white"
                 onClick={handleConfirmDelete}
               >
-                Delete
+                Supprimer
               </button>
             </div>
           </div>

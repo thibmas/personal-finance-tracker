@@ -223,16 +223,16 @@ const ReportsPage: React.FC = () => {
   return (
     <div className="page-container">
       <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Reports</h1>
+        <h1 className="text-2xl font-bold">Rapports</h1>
         <select
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
           className="border-none bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-1 focus:ring-0"
         >
-          <option value="1month">Last Month</option>
-          <option value="3months">Last 3 Months</option>
-          <option value="6months">Last 6 Months</option>
-          <option value="12months">Last 12 Months</option>
+          <option value="1month">Le mois dernier</option>
+          <option value="3months">3 derniers mois</option>
+          <option value="6months">6 derniers mois</option>
+          <option value="12months">12 derniers mois</option>
         </select>
       </header>
       
@@ -245,7 +245,7 @@ const ReportsPage: React.FC = () => {
           }`}
           onClick={() => setChartType('overview')}
         >
-          Overview
+          Vue d'ensemble
         </button>
         <button
           className={`px-4 py-2 mr-2 rounded-lg ${
@@ -255,7 +255,7 @@ const ReportsPage: React.FC = () => {
           }`}
           onClick={() => setChartType('balance')}
         >
-          Balance
+          Solde
         </button>
         <button
           className={`px-4 py-2 mr-2 rounded-lg ${
@@ -265,7 +265,7 @@ const ReportsPage: React.FC = () => {
           }`}
           onClick={() => setChartType('categories')}
         >
-          Categories
+          Catégories
         </button>
       </div>
       
@@ -278,22 +278,22 @@ const ReportsPage: React.FC = () => {
       </div>
       
       <div className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">Summary</h2>
+        <h2 className="text-lg font-semibold mb-4">Résumé</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="card">
-            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Income</h3>
+            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total des revenus</h3>
             <p className="text-xl font-semibold text-green-500 dark:text-green-400">
               {formatCurrency(monthlyIncome.reduce((sum, val) => sum + val, 0), settings.currency)}
             </p>
           </div>
           <div className="card">
-            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Expenses</h3>
+            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total des dépenses</h3>
             <p className="text-xl font-semibold text-red-500 dark:text-red-400">
               {formatCurrency(monthlyExpenses.reduce((sum, val) => sum + val, 0), settings.currency)}
             </p>
           </div>
           <div className="card">
-            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Net Balance</h3>
+            <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">Solde net</h3>
             <p className={`text-xl font-semibold ${
               monthlyBalance.reduce((sum, val) => sum + val, 0) >= 0
                 ? 'text-green-500 dark:text-green-400'
@@ -307,7 +307,7 @@ const ReportsPage: React.FC = () => {
       
       {chartType === 'categories' && (
         <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-4">Top Expense Categories</h2>
+          <h2 className="text-lg font-semibold mb-4">Catégories de dépenses principales</h2>
           <div className="card divide-y divide-gray-100 dark:divide-gray-800">
             {sortedExpenseCategories.map(([category, amount]) => (
               <div key={category} className="flex justify-between py-3">

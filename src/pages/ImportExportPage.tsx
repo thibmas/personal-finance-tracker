@@ -212,9 +212,9 @@ const ImportExportPage: React.FC = () => {
       </header>
       
       <div className="card mb-6">
-        <h2 className="text-lg font-semibold mb-4">Export Data</h2>
+        <h2 className="text-lg font-semibold mb-4">Exporter les données</h2>
         <p className="text-gray-600 dark:text-gray-300 mb-6">
-          Download a backup of all your data, including transactions, budgets, and settings.
+          Téléchargez une sauvegarde de toutes vos données, y compris les transactions, les budgets et les paramètres.
         </p>
         
         <div className="space-y-4">
@@ -223,14 +223,14 @@ const ImportExportPage: React.FC = () => {
             className="w-full btn-primary flex items-center justify-center"
           >
             <FileDown size={20} className="mr-2" />
-            Export All Data (JSON)
+            Exporter toutes les données (JSON)
           </button>
           <button
             onClick={handleExportToExcel}
             className="w-full btn-outline flex items-center justify-center"
           >
             <FileDown size={20} className="mr-2" />
-            Export Transactions (Excel)
+            Exporter les transactions (Excel)
           </button>
           <div className="grid grid-cols-2 gap-4">
             <button
@@ -252,9 +252,9 @@ const ImportExportPage: React.FC = () => {
       </div>
       
       <div className="card">
-        <h2 className="text-lg font-semibold mb-4">Import Data</h2>
+        <h2 className="text-lg font-semibold mb-4">Importer des données</h2>
         <p className="text-gray-600 dark:text-gray-300 mb-6">
-          Restore data from a previously exported JSON backup file.
+          Restaurez les données à partir d'un fichier JSON exporté précédemment.
         </p>
         
         <div className="space-y-4">
@@ -264,7 +264,7 @@ const ImportExportPage: React.FC = () => {
             disabled={importing}
           >
             <FileUp size={20} className="mr-2" />
-            {importing ? 'Importing...' : 'Import Data (JSON)'}
+            {importing ? 'Importation...' : 'Importer les données (JSON)'}
           </button>
           
           <input
@@ -281,7 +281,7 @@ const ImportExportPage: React.FC = () => {
             disabled={importing}
           >
             <FileUp size={20} className="mr-2" />
-            {importing ? 'Importing...' : 'Import from Excel (.xlsx)'}
+            {importing ? 'Importation...' : 'Importer depuis Excel (.xlsx)'}
           </button>
           <input
             type="file"
@@ -307,11 +307,11 @@ const ImportExportPage: React.FC = () => {
           )}
           
           <div className="text-sm text-gray-500 dark:text-gray-400 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-            <p className="font-medium mb-2">Important Notes:</p>
+            <p className="font-medium mb-2">Notes importantes :</p>
             <ul className="list-disc list-inside space-y-1">
-              <li>Importing data will replace all existing data</li>
-              <li>Make sure to backup your current data before importing</li>
-              <li>Only JSON files exported from this app are supported</li>
+              <li>L'importation de données remplacera toutes les données existantes</li>
+              <li>Pensez à sauvegarder vos données actuelles avant d'importer</li>
+              <li>Seuls les fichiers JSON exportés depuis cette application sont supportés</li>
             </ul>
           </div>
         </div>

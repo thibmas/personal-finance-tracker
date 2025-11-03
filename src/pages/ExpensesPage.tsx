@@ -5,9 +5,11 @@ import { useData } from '../context/DataContext';
 import { formatCurrency } from '../utils/formatters';
 import TransactionList from '../components/transactions/TransactionList';
 import { FilterOptions } from '../types';
+import { useTranslation } from 'react-i18next';
 
 const ExpensesPage: React.FC = () => {
   const { transactions, categories, settings } = useData();
+  const { t } = useTranslation();
 
   // Charger les filtres depuis la sessionStorage
   const sessionFilters = sessionStorage.getItem('expensesFilters');
@@ -60,7 +62,11 @@ const ExpensesPage: React.FC = () => {
       
       return true;
     })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    .sort((a, b) => {
+    const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (dateDiff !== 0) return dateDiff;
+    return String(a.id).localeCompare(String(b.id));
+  })
 
   const totalExpenses = expenses.reduce((sum, t) => sum + t.amount, 0);
   
@@ -94,7 +100,7 @@ const ExpensesPage: React.FC = () => {
   return (
     <div className="page-container">
       <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Expenses</h1>
+        <h1 className="text-2xl font-bold">Dépenses</h1>
         <div className="text-xl font-semibold text-red-500 dark:text-red-400">
           {formatCurrency(totalExpenses, settings.currency)}
         </div>
@@ -105,7 +111,7 @@ const ExpensesPage: React.FC = () => {
           <input
             type="text"
             className="w-full pl-10 pr-4 py-2"
-            placeholder="Search expenses..."
+            placeholder="Rechercher une dépense..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -118,7 +124,7 @@ const ExpensesPage: React.FC = () => {
             onClick={() => setShowFilters(!showFilters)}
           >
             <Filter size={16} className="mr-2" />
-            Filters {filters.categories?.length ? `(${filters.categories.length})` : ''}
+            Filtres {filters.categories?.length ? `(${filters.categories.length})` : ''}
           </button>
           
           {(filters.categories?.length || filters.startDate || filters.endDate) && (
@@ -126,7 +132,7 @@ const ExpensesPage: React.FC = () => {
               className="text-sm text-primary-600 dark:text-primary-400"
               onClick={clearFilters}
             >
-              Clear all
+              Effacer tout
             </button>
           )}
         </div>
@@ -134,7 +140,7 @@ const ExpensesPage: React.FC = () => {
         {showFilters && (
           <div className="card mb-4 animate-slide-up">
             <div className="mb-4">
-              <h3 className="text-sm font-medium mb-2">Categories</h3>
+              <h3 className="text-sm font-medium mb-2">Catégories</h3>
               <div className="flex flex-wrap gap-2">
                 {expenseCategories.map((category) => (
                   <button
@@ -155,7 +161,7 @@ const ExpensesPage: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="startDate" className="input-label">
-                  From Date
+                  De
                 </label>
                 <input
                   type="date"
@@ -167,7 +173,7 @@ const ExpensesPage: React.FC = () => {
               </div>
               <div>
                 <label htmlFor="endDate" className="input-label">
-                  To Date
+                  À
                 </label>
                 <input
                   type="date"
@@ -191,16 +197,16 @@ const ExpensesPage: React.FC = () => {
               <div className="text-gray-400 mb-2">
                 <Filter size={48} />
               </div>
-              <h3 className="text-lg font-medium mb-1">No expenses found</h3>
+              <h3 className="text-lg font-medium mb-1">Aucune dépense trouvée</h3>
               <p className="text-gray-500 dark:text-gray-400 mb-4">
                 {searchTerm || filters.categories?.length || filters.startDate || filters.endDate
-                  ? 'Try changing your filters or search term'
-                  : 'Start tracking your expenses'}
+                  ? 'Essayez de modifier vos filtres ou votre recherche'
+                  : 'Commencez à suivre vos dépenses'}
               </p>
             </div>
             <Link to="/expenses/add" className="btn-primary flex items-center">
               <Plus size={18} className="mr-2" />
-              Add Expense
+              Ajouter une dépense
             </Link>
           </div>
         )}
@@ -209,7 +215,7 @@ const ExpensesPage: React.FC = () => {
       <Link
         to="/expenses/add"
         className="fixed bottom-20 right-4 bg-primary-600 text-white rounded-full p-4 shadow-lg hover:bg-primary-700 transition-all"
-        aria-label="Add expense"
+        aria-label="Ajouter une dépense"
       >
         <Plus size={24} />
       </Link>

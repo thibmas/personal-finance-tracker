@@ -40,12 +40,20 @@ const HomePage: React.FC = () => {
   // Get recent transactions (last 5 of each type)
   const recentExpenses = transactions
     .filter((t) => t.type === 'expense')
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a, b) => {
+    const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (dateDiff !== 0) return dateDiff;
+    return String(a.id).localeCompare(String(b.id));
+  })
     .slice(0, 5);
     
   const recentIncome = transactions
     .filter((t) => t.type === 'income')
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a, b) => {
+    const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (dateDiff !== 0) return dateDiff;
+    return String(a.id).localeCompare(String(b.id));
+  })
     .slice(0, 5);
   
   const startPeriod = getStartOfCurrentPeriod(settings.firstDayOfMonth || 1);
@@ -60,12 +68,12 @@ const HomePage: React.FC = () => {
   return (
     <div className="page-container">
       <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">{t('home.title')}</h1>
+        <h1 className="text-2xl font-bold">Accueil</h1>
         <div className="flex items-center space-x-4">
           <div className="text-sm text-gray-500 dark:text-gray-400">
             {format(new Date(), 'MMMM yyyy')}
           </div>
-          <ChooseLanguage /> {/* Ajout du composant ici */}
+          <ChooseLanguage />
         </div>
       </header>
       
@@ -80,9 +88,9 @@ const HomePage: React.FC = () => {
       <section className="mb-8 animate-fade-in grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">{t('expenses.title')}</h2>
+            <h2 className="text-lg font-semibold">Dépenses</h2>
             <Link to="/reports" className="text-primary-600 dark:text-primary-400 flex items-center text-sm">
-              <span className="mr-1">{t('view.all')}</span>
+              <span className="mr-1">Voir tout</span>
               <ArrowRight size={16} />
             </Link>
           </div>
@@ -93,9 +101,9 @@ const HomePage: React.FC = () => {
 
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">{t('recent.expenses')}</h2>
+            <h2 className="text-lg font-semibold">Dépenses récentes</h2>
             <Link to="/expenses" className="text-primary-600 dark:text-primary-400 flex items-center text-sm">
-              <span className="mr-1">{t('view.all')}</span>
+              <span className="mr-1">Voir tout</span>
               <ArrowRight size={16} />
             </Link>
           </div>
@@ -104,10 +112,10 @@ const HomePage: React.FC = () => {
           ) : (
             <div className="card flex flex-col items-center justify-center py-8">
               <TrendingDown size={48} className="text-gray-400 mb-4" />
-              <p className="text-gray-500 dark:text-gray-400 mb-4">{t('no.recent.expenses')}</p>
+              <p className="text-gray-500 dark:text-gray-400 mb-4">Aucune dépense récente</p>
               <Link to="/expenses/add" className="btn-primary flex items-center">
                 <Plus size={16} className="mr-2" />
-                {t('add.expense')}
+                Ajouter une dépense
               </Link>
             </div>
           )}
@@ -116,9 +124,9 @@ const HomePage: React.FC = () => {
       
       <section className="mb-8 animate-fade-in">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">{t('recent.income')}</h2>
+          <h2 className="text-lg font-semibold">Revenus récents</h2>
           <Link to="/income" className="text-primary-600 dark:text-primary-400 flex items-center text-sm">
-            <span className="mr-1">{t('view.all')}</span>
+            <span className="mr-1">Voir tout</span>
             <ArrowRight size={16} />
           </Link>
         </div>
@@ -127,10 +135,10 @@ const HomePage: React.FC = () => {
         ) : (
           <div className="card flex flex-col items-center justify-center py-8">
             <TrendingUp size={48} className="text-gray-400 mb-4" />
-            <p className="text-gray-500 dark:text-gray-400 mb-4">{t('no.recent.income')}</p>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">Aucun revenu récent</p>
             <Link to="/income/add" className="btn-secondary flex items-center">
               <Plus size={16} className="mr-2" />
-              {t('add.income')}
+              Ajouter un revenu
             </Link>
           </div>
         )}
@@ -140,14 +148,14 @@ const HomePage: React.FC = () => {
         <Link
           to="/expenses/add"
           className="bg-primary-600 text-white rounded-full p-3 shadow-lg hover:bg-primary-700 transition-all"
-          aria-label="Add expense"
+          aria-label="Ajouter une dépense"
         >
           <TrendingDown size={24} />
         </Link>
         <Link
           to="/income/add"
           className="bg-accent-600 text-white rounded-full p-3 shadow-lg hover:bg-accent-700 transition-all"
-          aria-label="Add income"
+          aria-label="Ajouter un revenu"
         >
           <TrendingUp size={24} />
         </Link>
