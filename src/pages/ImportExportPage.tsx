@@ -232,22 +232,6 @@ const ImportExportPage: React.FC = () => {
             <FileDown size={20} className="mr-2" />
             Exporter les transactions (Excel)
           </button>
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              onClick={() => exportCSV('transactions')}
-              className="btn-outline flex items-center justify-center"
-            >
-              <FileDown size={18} className="mr-2" />
-              Transactions (CSV)
-            </button>
-            <button
-              onClick={() => exportCSV('budgets')}
-              className="btn-outline flex items-center justify-center"
-            >
-              <FileDown size={18} className="mr-2" />
-              Budgets (CSV)
-            </button>
-          </div>
         </div>
       </div>
       

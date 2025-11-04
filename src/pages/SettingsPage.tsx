@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Tag, Download, Upload, Trash, Moon, Sun, ArrowRight, 
@@ -6,15 +6,43 @@ import {
 } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import { useTheme } from '../context/ThemeContext';
-import { exportData, exportCSV, defaultCategories } from '../utils/storage';
+import { exportData, exportCSV } from '../utils/storage';
 import { useTranslation } from 'react-i18next';
 import * as XLSX from 'xlsx';
+import EditBudgetModal from '../EditBudgetPage';
+import { Category } from '../types';
+
+const defaultCategories: Category[] = [
+  { id: "1", name: "Solde initial", type: "income", color: "#EF4444", icon: "" },
+  { id: "2", name: "Revenus professionnels", type: "income", color: "#F59E0B", icon: "" },
+  { id: "3", name: "Prime", type: "income", color: "#1ab783", icon: "" },
+  { id: "4", name: "Achat", type: "expense", color: "#f27379", icon: "" },
+  { id: "5", name: "Course Alimentation", type: "expense", color: "#deafe4", icon: "" },
+  { id: "6", name: "Numérique Téléphonie", type: "expense", color: "#f7ef97", icon: "" },
+  { id: "7", name: "Sortie", type: "expense", color: "#ff8e7a", icon: "" },
+  { id: "8", name: "Voiture", type: "expense", color: "#f28073", icon: "" },
+  { id: "9", name: "Bébé", type: "expense", color: "#f0a3d4", icon: "" },
+  { id: "10", name: "Santé", type: "expense", color: "#ffcfa8", icon: "" },
+  { id: "11", name: "Epargne", type: "expense", color: "#a76fec", icon: "" },
+  { id: "12", name: "Assurance", type: "expense", color: "#ff99bd", icon: "" },
+  { id: "13", name: "Restaurant", type: "expense", color: "#f0d589", icon: "" },
+  { id: "14", name: "Essence", type: "expense", color: "#b1c8ec", icon: "" },
+  { id: "15", name: "Logement", type: "expense", color: "#a6f995", icon: "" },
+  { id: "16", name: "Frais compte", type: "expense", color: "#91a3ee", icon: "" },
+  { id: "17", name: "Hors Budget", type: "expense", color: "#afe8f3", icon: "" },
+  { id: "18", name: "Energie", type: "expense", color: "#b795e9", icon: "" },
+  { id: "19", name: "Impôts", type: "expense", color: "#a8e1b9", icon: "" },
+  { id: "02d193b1-3276-40c4-8aeb-c8449a399ed9", name: "Début de mois", type: "expense", color: "#f5b3d6", icon: "" }
+];
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
   const { settings, updateSettings, resetData, transactions, importData } = useData();
   const { theme, toggleTheme } = useTheme();
   const [showResetConfirm, setShowResetConfirm] = React.useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const docId = 'budget-share-id'; // Remplacer par la logique réelle pour obtenir l'id
+  const shareLink = `${window.location.origin}/share/${docId}`;
   
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     updateSettings({
@@ -216,34 +244,7 @@ const SettingsPage: React.FC = () => {
               <ArrowRight size={20} className="text-gray-400" />
             </div>
           </Link>
-          
-          <div className="card">
-            <h3 className="font-medium mb-2">Export rapide</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => exportData()}
-                className="btn-outline flex items-center justify-center"
-              >
-                <Download size={18} className="mr-2" />
-                Sauvegarde complète
-              </button>
-              <button
-                onClick={() => exportCSV('transactions')}
-                className="btn-outline flex items-center justify-center"
-              >
-                <Download size={18} className="mr-2" />
-                Transactions (CSV)
-              </button>
-              <button
-                onClick={() => handleExportToExcel()}
-                className="btn-outline flex items-center justify-center"
-              >
-                <Download size={18} className="mr-2" />
-                Exporter vers Excel
-              </button>
-            </div>
-          </div>
-          
+                    
           <button
             onClick={() => setShowResetConfirm(true)}
             className="card block w-full hover:shadow-lg transition-shadow"
@@ -287,6 +288,11 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      <button onClick={() => setModalOpen(true)} style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', cursor: 'pointer' }} title="Partager">
+        <span role="img" aria-label="share">🔗</span>
+      </button>
+      <EditBudgetModal open={modalOpen} onClose={() => setModalOpen(false)} shareLink={shareLink} />
     </div>
   );
 };

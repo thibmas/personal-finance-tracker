@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { 
   TrendingUp, TrendingDown, Plus, Eye, DollarSign, ArrowRight 
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { fr, enUS } from 'date-fns/locale';
+import type { Locale } from 'date-fns';
 import { useData } from '../context/DataContext';
 import BalanceCard from '../components/dashboard/BalanceCard';
 import TransactionList from '../components/transactions/TransactionList';
 import ExpenseChart from '../components/charts/ExpenseChart';
 import ChooseLanguage from '../components/ChooseLanguage'; // Import du composant
+import EditBudgetModal from '../EditBudgetPage';
 
 // Fonction utilitaire pour obtenir la date de début de période personnalisée
 function getStartOfCurrentPeriod(startOfMonthDay: number): Date {
@@ -32,10 +35,20 @@ function getEndOfCurrentPeriod(startOfMonthDay: number): Date {
 
 const HomePage: React.FC = () => {
   const { transactions, settings } = useData();
-  const { t } = useTranslation(); // Hook pour les traductions
+  const { t, i18n } = useTranslation(); // Hook pour les traductions
+  const [modalOpen, setModalOpen] = useState(false);
+  const docId = 'budget-share-id'; // Remplacer par la logique réelle pour obtenir l'id
+  const shareLink = `${window.location.origin}/share/${docId}`;
   
   // BalanceCard utilise maintenant le paramètre de début de mois
   // settings.startOfMonthDay doit exister dans les paramètres
+
+  // Sélectionne la locale selon la langue active
+  const localeMap: Record<string, Locale> = {
+    fr: fr,
+    en: enUS,
+  };
+  const currentLocale = localeMap[i18n.language] || enUS;
 
   // Get recent transactions (last 5 of each type)
   const recentExpenses = transactions
@@ -69,10 +82,25 @@ const HomePage: React.FC = () => {
     <div className="page-container">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Accueil</h1>
-        <div className="flex items-center space-x-4">
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            {format(new Date(), 'MMMM yyyy')}
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+            {(() => {
+              const dateStr = format(new Date(), 'MMMM yyyy', { locale: currentLocale });
+              return dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+            })()}
           </div>
+        <div className="flex items-center space-x-4 justify-end">
+          
+          <button
+            onClick={() => setModalOpen(true)}
+            className="bg-primary-600 text-white rounded-full p-2 shadow-lg hover:bg-primary-700 transition-all relative group"
+            style={{ fontSize: 20 }}
+            aria-label="Partager"
+          >
+            <span role="img" aria-label="share">🔗</span>
+            <span className="absolute right-full top-1/2 -translate-y-1/2 ml-0.5 px-3 py-1 text-xs bg-black text-white rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              {t('Partager')}
+            </span>
+          </button>
           <ChooseLanguage />
         </div>
       </header>
@@ -160,6 +188,8 @@ const HomePage: React.FC = () => {
           <TrendingUp size={24} />
         </Link>
       </div>
+
+      <EditBudgetModal open={modalOpen} onClose={() => setModalOpen(false)} shareLink={shareLink} />
     </div>
   );
 };

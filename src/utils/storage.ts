@@ -4,18 +4,26 @@ const STORAGE_KEY = 'finance_tracker_data';
 
 // Default categories
 export const defaultCategories = [
-  { id: '1', name: 'Food', type: 'expense' as const, color: '#EF4444' },
-  { id: '2', name: 'Transport', type: 'expense' as const, color: '#F59E0B' },
-  { id: '3', name: 'Housing', type: 'expense' as const, color: '#10B981' },
-  { id: '4', name: 'Entertainment', type: 'expense' as const, color: '#6366F1' },
-  { id: '5', name: 'Healthcare', type: 'expense' as const, color: '#EC4899' },
-  { id: '6', name: 'Shopping', type: 'expense' as const, color: '#8B5CF6' },
-  { id: '7', name: 'Utilities', type: 'expense' as const, color: '#14B8A6' },
-  { id: '8', name: 'Other Expense', type: 'expense' as const, color: '#6B7280' },
-  { id: '9', name: 'Salary', type: 'income' as const, color: '#22C55E' },
-  { id: '10', name: 'Freelance', type: 'income' as const, color: '#3B82F6' },
-  { id: '11', name: 'Gifts', type: 'income' as const, color: '#D946EF' },
-  { id: '12', name: 'Other Income', type: 'income' as const, color: '#64748B' },
+  { id: '1', name: 'Solde initial', type: 'income' as const, color: '#EF4444', icon: '' },
+  { id: '2', name: 'Revenus professionnels', type: 'income' as const, color: '#F59E0B', icon: '' },
+  { id: '3', name: 'Prime', type: 'income' as const, color: '#1ab783', icon: '' },
+  { id: '4', name: 'Achat', type: 'expense' as const, color: '#f27379', icon: '' },
+  { id: '5', name: 'Course Alimentation', type: 'expense' as const, color: '#deafe4', icon: '' },
+  { id: '6', name: 'Numérique Téléphonie', type: 'expense' as const, color: '#f7ef97', icon: '' },
+  { id: '7', name: 'Sortie', type: 'expense' as const, color: '#ff8e7a', icon: '' },
+  { id: '8', name: 'Voiture', type: 'expense' as const, color: '#f28073', icon: '' },
+  { id: '9', name: 'Bébé', type: 'expense' as const, color: '#f0a3d4', icon: '' },
+  { id: '10', name: 'Santé', type: 'expense' as const, color: '#ffcfa8', icon: '' },
+  { id: '11', name: 'Epargne', type: 'expense' as const, color: '#a76fec', icon: '' },
+  { id: '12', name: 'Assurance', type: 'expense' as const, color: '#ff99bd', icon: '' },
+  { id: '13', name: 'Restaurant', type: 'expense' as const, color: '#f0d589', icon: '' },
+  { id: '14', name: 'Essence', type: 'expense' as const, color: '#b1c8ec', icon: '' },
+  { id: '15', name: 'Logement', type: 'expense' as const, color: '#a6f995', icon: '' },
+  { id: '16', name: 'Frais compte', type: 'expense' as const, color: '#91a3ee', icon: '' },
+  { id: '17', name: 'Hors Budget', type: 'expense' as const, color: '#afe8f3', icon: '' },
+  { id: '18', name: 'Energie', type: 'expense' as const, color: '#b795e9', icon: '' },
+  { id: '19', name: 'Impôts', type: 'expense' as const, color: '#a8e1b9', icon: '' },
+  { id: '02d193b1-3276-40c4-8aeb-c8449a399ed9', name: 'Début de mois', type: 'expense' as const, color: '#f5b3d6', icon: '' },
 ];
 
 // Default settings

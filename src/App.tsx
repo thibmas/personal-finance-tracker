@@ -16,6 +16,7 @@ import PlannedBudgetPage from './pages/PlannedBudgetPage';
 import EditTransactionPage from './pages/EditTransactionPage';
 import EditBudgetPage from './pages/EditBudgetPage';
 import AddBudgetPage from './pages/AddBudgetPage';
+import SharedBudgetPage from './pages/SharedBudgetPage';
 
 function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/expenses/:id/edit" element={<EditTransactionPage />} /> 
         <Route path="/incomes/:id/edit" element={<EditTransactionPage />} />
+        <Route path="/share/:id" element={<SharedBudgetPage />} />
       </Route>
     </Routes>
   );
